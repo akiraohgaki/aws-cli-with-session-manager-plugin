@@ -7,17 +7,19 @@ CLUSTER=''
 TASK=''
 CONTAINER=''
 
+COMMAND='podman'
 WORK_DIR="$(cd "$(dirname "${0}")" && pwd)"
 
 if [ "${1}" = '--build' ]; then
-  podman build -t localhost/aws-cli-with-session-manager-plugin:latest "${WORK_DIR}"
+  COMMAND build -t localhost/aws-cli-with-session-manager-plugin:latest \
+    -f "${WORK_DIR}/Containerfile" "${WORK_DIR}"
 fi
 
 if [ ! -d "${WORK_DIR}/.aws" ]; then
   mkdir "${WORK_DIR}/.aws"
 fi
 
-podman run --rm -ti \
+COMMAND run --rm -ti \
   -e AWS_ACCESS_KEY_ID="${ACCESS_KEY_ID}" \
   -e AWS_SECRET_ACCESS_KEY="${SECRET_ACCESS_KEY}" \
   -e AWS_DEFAULT_REGION="${REGION}" \

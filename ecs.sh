@@ -8,8 +8,7 @@ TASK=''
 CONTAINER=''
 
 WORK_DIR="$(cd "$(dirname "${0}")" && pwd)"
-IMAGE_BUILD_CONTEXT="${WORK_DIR}"
-IMAGE_TAG='localhost/aws-cli-with-session-manager-plugin:latest'
+IMAGE_TAG='docker.io/akiraohgaki/aws-cli-with-session-manager-plugin:latest'
 
 COMMAND=''
 
@@ -22,11 +21,6 @@ if [ "${COMMAND}" = '' ]; then
     echo 'docker or podman required'
     exit 1
   fi
-fi
-
-if [ "${1}" = '--build' ]; then
-  "${COMMAND}" build -t "${IMAGE_TAG}" \
-    -f "${IMAGE_BUILD_CONTEXT}/Containerfile" "${IMAGE_BUILD_CONTEXT}"
 fi
 
 if [ ! -d "${WORK_DIR}/.aws" ]; then
